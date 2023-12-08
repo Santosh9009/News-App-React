@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom'
 export class Navbar extends Component {
   render() {
     return (
-      <nav className="navbar navbar-dark navbar-expand-lg bg-info">
+      <nav className="navbar navbar-dark navbar-expand-lg bg-dark">
   <div className="container-fluid">
-    <a className="navbar-brand" href="#">NewZap</a>
+    <a style={{color:'#0dcaf0'}} className="navbar-brand" href="#">NewZap</a>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>

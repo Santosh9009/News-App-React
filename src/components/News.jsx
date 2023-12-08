@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import Newsitem from "./Newsitem";
-import Spinner, { spinner } from "./spinner";
+import Spinner from "./spinner";
 import "./News.css";
 import PropTypes from "prop-types";
 import InfiniteScroll from "react-infinite-scroll-component";
+import LoadingBar from 'react-top-loading-bar'
 
 export class News extends Component {
   static defaultProps = {
@@ -24,10 +25,11 @@ export class News extends Component {
       loading: true,
       page: 1,
       totalResults: 0,
+      Progress : 10,
     };
   }
 
-  async Update() {
+  async componentDidMount() {
     const url = `https://newsapi.org/v2/top-headlines?country=${this.props.country}&category=${this.props.catagory}&apiKey=25145c3b149b4351825926f5dcc93def&page=${this.state.page}&pagesize=${this.props.pagesize}`;
 
     this.setState({ loading: true });
@@ -38,11 +40,9 @@ export class News extends Component {
       articles: parsedData.articles,
       totalResults: parsedData.totalResults,
       loading: false,
+      Progress : 100,
     });
-  }
-
-  async componentDidMount() {
-    this.Update();
+    console.log(this.state.articles.length+" "+this.state.totalResults);
   }
 
   fetchMoreData = async () => {
@@ -66,22 +66,23 @@ export class News extends Component {
   render() {
     return (
       <>
+       <LoadingBar color='#0dcaf0' progress={this.state.Progress}
+    onLoaderFinished={() => this.setState({Progress:0})} />
         <h2>NewZap Topheadlines - {this.Capitalize(this.props.catagory)}</h2>
         {this.state.loading && <Spinner/>}
         <InfiniteScroll
           dataLength={this.state.articles.length}
           next={this.fetchMoreData}
-          hasMore={this.state.articles.length!== this.state.totalResults}
+          hasMore={this.state.articles.length < this.state.totalResults}
           loader={<Spinner />}
           style={{overflow:"hidden"}}
         >
-          <div className="container">
+          <div className="container my-5">
             <div className="row">
               {this.state.articles.map((element) => {
                 return (
                   <div
                     className="col-md-4 my-4 d-flex justify-content-center"
-                    key={element.url}
                   >
                     <Newsitem
                       title={element.title}
@@ -91,7 +92,6 @@ export class News extends Component {
                           : "No description available"
                       }
                       imageurl={element.urlToImage}
-                      newsurl={element.url}
                       author={element.author}
                       date={element.publishedAt}
                     />

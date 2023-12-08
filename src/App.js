@@ -14,7 +14,7 @@ export class App extends Component {
           <Routes>
           <Route exact path="/" element={<News key={'general'} pagesize={15} counrty={"in"} catagory={"general"} />} />
 
-            <Route exact path="/health" element={<News key={'health key={}'} pagesize={15} counrty={"in"} catagory={"health"} />} />
+            <Route exact path="/health" element={<News key={'health'} pagesize={15} counrty={"in"} catagory={"health"} />} />
 
             <Route exact path="/science" element={<News key={'cience'} pagesize={15} counrty={"in"} catagory={"science"} />} />
 
