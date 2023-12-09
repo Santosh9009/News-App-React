@@ -1,14 +1,14 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './spinner.css';
 
-export class spinner extends Component {
-  render() {
+const spinner=()=> {
+
     return (
       <div className='text-center'>
         <span className="loader"></span>
       </div>
     )
   }
-}
 
-export default spinner
+
+export default spinner;
